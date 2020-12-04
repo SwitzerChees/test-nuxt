@@ -28,15 +28,17 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { ref, onMounted } from '@nuxtjs/composition-api'
+import { reactive, computed, onMounted } from '@nuxtjs/composition-api'
+import { state } from '../count/count.store'
 
 export default Vue.extend({
   setup() {
-    const count = ref(0)
-    const incCount = () => (count.value += 1)
+    const reState = reactive(state)
+    const incCount = () => (reState.count += 1)
+    const count = computed(() => reState.count)
 
     onMounted(() => {
-      count.value = 10
+      reState.count += 10
     })
 
     return {
